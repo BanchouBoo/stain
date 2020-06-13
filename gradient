@@ -1,0 +1,14 @@
+#!/bin/sh
+# Create a gradient between two hex colors
+
+[ -t 0 ] || set -- $(cat) $*
+
+start=${1#\#}
+end=${2#\#}
+step=$((100 / ($3 - 1)))
+
+current_step=0
+while [ "$current_step" -le 100 ]; do
+	lerphex "$start" "$end" "$current_step"
+	current_step=$((current_step + step))
+done

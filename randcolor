@@ -1,0 +1,16 @@
+#!/bin/sh
+# Generate random hex colors
+
+rand() {
+	i=$1
+	while [ "$i" -gt 0 ]; do
+		r=$(tr -dc 1-9 < /dev/urandom | dd ibs=1 obs=1 count=5 2>/dev/null)
+		r=$((r % 255))
+		printf '%s\n' "$r"
+		i=$((i-1))
+	done
+}
+
+count=${1:-1}
+count=$((count * 3))
+rand "$count" | rgb2hex

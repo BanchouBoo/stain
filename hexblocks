@@ -1,0 +1,8 @@
+#!/bin/sh
+# Display a list of hex colors as color blocks with the hex value next to them
+
+[ -t 0 ] || set -- $(cat) $* # append piped hex value
+for i; do
+	set -- $(hex2rgb "$i")
+	printf '\033[48;2;%s;%s;%sm          \033[m #%s\n' "$1" "$2" "$3" "$i"
+done

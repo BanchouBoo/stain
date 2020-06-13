@@ -1,0 +1,21 @@
+#!/bin/sh
+# Increase or decrease the brightness of hex colors
+
+shadehex() {
+	hex=${1#\#}
+	mult=$2
+    set -- $(hex2rgb "$hex")
+
+	r=$(($1 * $mult)); [ $r -gt 255 ] && r=255
+	g=$(($2 * $mult)); [ $g -gt 255 ] && g=255
+	b=$(($3 * $mult)); [ $b -gt 255 ] && b=255
+	printf '%02x%02x%02x\n' "$r" "$g" "$b"
+}
+
+if [ -t 0 ]; then
+	shadehex "$1" "$2"
+else
+	for hex in $(cat); do
+		shadehex "$hex" "$1"
+	done
+fi

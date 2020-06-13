@@ -1,0 +1,22 @@
+#!/bin/sh
+# Takes a list of hex colors and finds the average between them all
+
+[ -t 0 ] || set -- $(cat) $*
+r=0
+g=0
+b=0
+count=$#
+for i; do
+	hex=${i#\#}
+	set -- $(hex2rgb "$hex")
+
+	r=$((r + $1))
+	g=$((g + $2))
+	b=$((b + $3))
+done
+
+r=$((r / count))
+g=$((g / count))
+b=$((b / count))
+
+printf '%02x%02x%02x\n' "$r" "$g" "$b"

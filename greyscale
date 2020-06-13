@@ -1,0 +1,12 @@
+#!/bin/sh
+# Greyscale colors by averaging the RGB values (may change to a different method)
+
+[ -t 0 ] || set -- $(cat) $*
+
+for i; do
+	hex=${i#\#}
+	set -- $(hex2rgb "$hex")
+
+	grey=$((($1 + $2 + $3) / 3))
+	printf '%02x%02x%02x\n' "$grey" "$grey" "$grey"
+done

@@ -1,0 +1,13 @@
+#!/bin/sh
+# Convert a hex color to RGB
+
+[ -t 0 ] || set -- $(cat) $*
+for i; do
+	hex=${i#\#}
+	r=${hex%%????}
+	g=${hex##??}
+	g=${g%%??}
+	b=${hex##????}
+
+	printf '%d %d %d\n' "0x$r" "0x$g" "0x$b"
+done

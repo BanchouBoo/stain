@@ -1,0 +1,23 @@
+#!/bin/sh
+
+[ -t 0 ] || set -- $(cat) $*
+
+hex_a=${1#\#}
+hex_b=${2#\#}
+p=$3
+
+set -- $(hex2rgb "$hex_a")
+ar=$1
+ag=$2
+ab=$3
+
+set -- $(hex2rgb "$hex_b")
+br=$1
+bg=$2
+bb=$3
+
+r=$(( ar + (br - ar) * p / 100 ))
+g=$(( ag + (bg - ag) * p / 100 ))
+b=$(( ab + (bb - ab) * p / 100 ))
+
+printf '%02x%02x%02x\n' "$r" "$g" "$b"
